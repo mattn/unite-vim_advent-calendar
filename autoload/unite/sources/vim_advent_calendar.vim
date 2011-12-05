@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " define source
 function! unite#sources#vim_advent_calendar#define()
   return s:source
@@ -26,7 +28,7 @@ function! s:source.gather_candidates(args, context)
     for item in dom.childNode('channel').childNodes('item')
       let dom = html#parse('<div>' . item.childNode('description').value() . '</div>')
 	  let desc = matchstr(substitute(dom.value(), '\n', '', 'g'), '^\s*\zs.\+\ze\s*$')
-      if desc =~ '$B!Z(B'
+      if desc =~ '【'
         continue
       endif
       let uri = dom.find('a').attr['href']
