@@ -25,8 +25,11 @@ function! s:source.gather_candidates(args, context)
     let dom = xml#parseURL('http://atnd.org/comments/21925.rss')
     for item in dom.childNode('channel').childNodes('item')
       let dom = html#parse('<div>' . item.childNode('description').value() . '</div>')
-      let uri = dom.find('a').attr['href']
 	  let desc = matchstr(substitute(dom.value(), '\n', '', 'g'), '^\s*\zs.\+\ze\s*$')
+      if desc =~ '【'
+        continue
+      endif
+      let uri = dom.find('a').attr['href']
       call add(s:cache, {
       \ 'word':   desc,
       \ 'kind':   'uri',
