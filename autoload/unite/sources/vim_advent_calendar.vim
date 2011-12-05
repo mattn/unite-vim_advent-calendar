@@ -29,14 +29,12 @@ function! s:source.gather_candidates(args, context)
       let desc = dom.value()
 	  let desc = substitute(desc, '\n', '', 'g')
 	  let desc = matchstr(desc, '^\s*\zs.\+\ze\s*$')
-      for entry in entries
-        call add(s:cache, {
-        \ 'word':   desc,
-        \ 'kind':   'uri',
-        \ 'source': 'vim_advent_calendar',
-        \ 'action__path': url
-        \})
-      endfor
+      call add(s:cache, {
+      \ 'word':   desc,
+      \ 'kind':   'uri',
+      \ 'source': 'vim_advent_calendar',
+      \ 'action__path': url
+      \})
       unlet item
     endfor
   endif
