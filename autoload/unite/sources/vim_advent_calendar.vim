@@ -28,12 +28,14 @@ function! s:source.gather_candidates(args, context)
     for item in dom.childNode('channel').childNodes('item')
       let dom = html#parse('<div>' . item.childNode('description').value() . '</div>')
 	  let desc = matchstr(substitute(dom.value(), '\n', '', 'g'), '^\s*\zs.\+\ze\s*$')
-      if desc !~ '【'
+      if desc !~ '日目'
         continue
       endif
+      let day = matchstr(desc, '\(\d\+\)\s*日目')
       let uri = dom.find('a').attr['href']
+      let desc = dom.find('a').value()
       call add(s:cache, {
-      \ 'word':   desc,
+      \ 'word':   printf("【%d日目】%s", day, desc),
       \ 'kind':   'uri',
       \ 'source': 'vim_advent_calendar',
       \ 'action__path': uri
